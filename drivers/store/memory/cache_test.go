@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/ulule/limiter/drivers/store/memory"
+	"github.com/tinycolds/limiter/drivers/store/memory"
 )
 
 func TestCacheIncrementSequential(t *testing.T) {
