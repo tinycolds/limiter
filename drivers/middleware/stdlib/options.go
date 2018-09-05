@@ -6,12 +6,12 @@ import (
 
 // Option is used to define Middleware configuration.
 type Option interface {
-	apply(*Middleware)
+	Apply(*Middleware)
 }
 
 type option func(*Middleware)
 
-func (o option) apply(middleware *Middleware) {
+func (o option) Apply(middleware *Middleware) {
 	o(middleware)
 }
 
@@ -52,7 +52,7 @@ func WithForwardHeader(trusted bool) Option {
 	})
 }
 
-// SetGlobalLimit will configure the Middleware to apply global api limit, not for each client.
+// SetGlobalLimit will configure the Middleware to Apply global api limit, not for each client.
 func SetGlobalLimit(globalLimit bool) Option {
 	return option(func(middleware *Middleware) {
 		middleware.GlobalLimit = globalLimit

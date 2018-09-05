@@ -25,7 +25,7 @@ func NewMiddleware(limiter *limiter.Limiter, options ...Option) *Middleware {
 	}
 
 	for _, option := range options {
-		option.apply(middleware)
+		option.Apply(middleware)
 	}
 
 	return middleware
