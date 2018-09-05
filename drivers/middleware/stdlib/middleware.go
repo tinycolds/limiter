@@ -13,6 +13,7 @@ type Middleware struct {
 	OnError            ErrorHandler
 	OnLimitReached     LimitReachedHandler
 	TrustForwardHeader bool
+	GlobalLimit        bool
 }
 
 // NewMiddleware return a new instance of a basic HTTP middleware.
@@ -33,7 +34,15 @@ func NewMiddleware(limiter *limiter.Limiter, options ...Option) *Middleware {
 // Handler the middleware handler.
 func (middleware *Middleware) Handler(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		context, err := middleware.Limiter.Get(r.Context(), limiter.GetIPKey(r, middleware.TrustForwardHeader))
+		var context 	limiter.Context
+		var err 	error
+
+		if middleware.GlobalLimit {
+			context, err = middleware.Limiter.Get(r.Context(), limiter.DefaultIpKey)
+		} else {
+			context, err = middleware.Limiter.Get(r.Context(), limiter.GetIPKey(r, middleware.TrustForwardHeader))
+		}
+
 		if err != nil {
 			middleware.OnError(w, r, err)
 			return

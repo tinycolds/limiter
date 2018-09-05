@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const DefaultIpKey = "0.0.0.0"
+
 // GetIP returns IP address from request.
 func GetIP(r *http.Request, trustForwardHeader ...bool) net.IP {
 	if len(trustForwardHeader) >= 1 && trustForwardHeader[0] {

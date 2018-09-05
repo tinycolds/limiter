@@ -51,3 +51,10 @@ func WithForwardHeader(trusted bool) Option {
 		middleware.TrustForwardHeader = trusted
 	})
 }
+
+// SetGlobalLimit will configure the Middleware to apply global api limit, not for each client.
+func SetGlobalLimit(globalLimit bool) Option {
+	return option(func(middleware *Middleware) {
+		middleware.GlobalLimit = globalLimit
+	})
+}
