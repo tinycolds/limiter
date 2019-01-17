@@ -38,7 +38,7 @@ func (middleware *Middleware) Handler(h http.Handler) http.Handler {
 		var err 	error
 
 		if middleware.GlobalLimit {
-			context, err = middleware.Limiter.Get(r.Context(), limiter.DefaultIpKey)
+			context, err = middleware.Limiter.Get(r.Context(), limiter.GetDefaultKey(r))
 		} else {
 			context, err = middleware.Limiter.Get(r.Context(), limiter.GetIPKey(r, middleware.TrustForwardHeader))
 		}

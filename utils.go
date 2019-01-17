@@ -1,6 +1,7 @@
 package limiter
 
 import (
+	"fmt"
 	"math/rand"
 	"net"
 	"net/http"
@@ -38,6 +39,11 @@ func GetIP(r *http.Request, trustForwardHeader ...bool) net.IP {
 // GetIPKey extracts IP from request and returns hashed IP to use as store key.
 func GetIPKey(r *http.Request, trustForwardHeader ...bool) string {
 	return GetIP(r, trustForwardHeader...).String()
+}
+
+// GetDefaultKey returns default ip and url path key.
+func GetDefaultKey(r *http.Request) string {
+	return fmt.Sprintf("%s-%s", DefaultIpKey, r.URL.Path)
 }
 
 // Random return a random integer between min and max.
